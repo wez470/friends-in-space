@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://fonts/oswald.tres" type="DynamicFont" id=1]
+
+[node name="LobbyEntry" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="Label" parent="."]
+margin_left = 90.0
+margin_right = 890.0
+margin_bottom = 88.0
+custom_fonts/font = ExtResource( 1 )
+text = "PlayerName"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ID" type="Label" parent="."]
+margin_left = 800.0
+margin_right = 1660.0
+margin_bottom = 88.0
+rect_pivot_offset = Vector2( -2013.44, -456.119 )
+custom_fonts/font = ExtResource( 1 )
+text = "0000000000000"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Num" type="Label" parent="."]
+margin_left = 1600.0
+margin_right = 1700.0
+margin_bottom = 88.0
+rect_pivot_offset = Vector2( -2013.44, -456.119 )
+custom_fonts/font = ExtResource( 1 )
+text = "0"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

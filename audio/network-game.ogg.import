@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/network-game.ogg-506adbfabf8c2d99c7d804d30ab88b2d.oggstr"
+
+[deps]
+
+source_file="res://audio/network-game.ogg"
+dest_files=[ "res://.import/network-game.ogg-506adbfabf8c2d99c7d804d30ab88b2d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
