@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var player_pos = [Vector2(710, 340), Vector2(1210, 340), Vector2(710, 740), Vector2(1210, 740)]
+var player_pos = [Vector2(810, 440), Vector2(1110, 440), Vector2(810, 640), Vector2(1110, 640)]
 var p2 = preload("res://sprites/p2-placeholder.png")
 var p3 = preload("res://sprites/p3-placeholder.png")
 var p1 = preload("res://sprites/p1-placeholder.png")

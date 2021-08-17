@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const ship_wall_width: int = 32
+const ship_wall_width: int = 20
 
 export (int) var speed = 200
 
@@ -37,7 +37,7 @@ func _ready():
 		get_node("NetworkTick").start()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_network_master():
 		if driving:
 			handle_driving()
@@ -47,11 +47,10 @@ func _physics_process(delta):
 			handle_movement()
 	else:
 		if not tween.is_active() && initialized:
-			set_global_position(puppet_pos)
+			position = puppet_pos
 
 
 func handle_driving():
-	var rocket: Node2D = ship.get_node("Rocket")
 	var new_input = Global.Input.NONE
 	if Input.is_action_pressed("right") && Input.is_action_pressed("left"):
 		new_input = Global.Input.NONE
@@ -123,7 +122,7 @@ func handle_movement():
 
 	# Lock player to ship radius. Do this manually to avoid Rigibody2D collision physics with the ship
 	var ship_sprite: Sprite = ship.get_node("Sprite")
-	var ship_radius = ship_sprite.texture.get_width() / 2 * ship_sprite.transform.get_scale().x - ship_wall_width
+	var ship_radius = ship_sprite.texture.get_width() / 2.0 * ship_sprite.transform.get_scale().x - ship_wall_width
 	var ship_center_position = ship.global_position
 	var distance_to_ship_center: float = global_position.distance_to(ship_center_position)
 
@@ -135,12 +134,12 @@ func handle_movement():
 
 func _on_NetworkTick_timeout():
 	if is_network_master():
-		rset_unreliable("puppet_pos", global_position)
+		rset_unreliable("puppet_pos", position)
 
 
 func puppet_pos_set(new_value) -> void:
 	puppet_pos = new_value
-	tween.interpolate_property(self, "global_position", global_position, puppet_pos, 0.1)
+	tween.interpolate_property(self, "position", position, puppet_pos, 0.1)
 	tween.start()
 	initialized = true
 
@@ -160,6 +159,10 @@ func _unhandled_input(event):
 remotesync func set_driving_module_use(drive: bool):
 	print("Set driving module usage from server: ", drive)
 	driving = drive
+	if !driving:
+		ship.rpc_id(Global.SERVER_ID, "set_steering_input", Global.Input.NONE)
+		ship.rpc_id(Global.SERVER_ID, "set_firing_engine", false)
+		
 
 
 master func set_gun_top_use(using: bool):

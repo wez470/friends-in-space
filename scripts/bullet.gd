@@ -4,7 +4,7 @@ var speed = 600
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var direction = rotation - PI/2
 	var vel = Vector2(cos(direction), sin(direction)) * speed
 	move_and_slide(vel)

@@ -1,6 +1,6 @@
 extends Node2D
 
-const rocket_to_center_distance: int = 428
+const rocket_to_center_distance: int = 230
 const rotation_speed: float = PI/200
 
 onready var tween = $Tween
@@ -17,7 +17,7 @@ func _ready():
 	ship = get_parent()
 
 
-func _process(delta):
+func _process(_delta):
 	rotation = global_position.direction_to(ship.global_position).angle()
 	
 	var rocket_flame = get_node("Flame")
@@ -27,7 +27,7 @@ func _process(delta):
 		rocket_flame.set_visible(false)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_network_master():
 		if curr_input == Global.Input.LEFT:
 			curr_rotation -= rotation_speed

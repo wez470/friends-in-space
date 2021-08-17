@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/level1.gd" type="Script" id=1]
 [ext_resource path="res://audio/network-game.ogg" type="AudioStream" id=2]
@@ -16,6 +16,9 @@ extents = Vector2( 15.5415, 44.1826 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 38.5439
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 214.372
 
 [node name="root" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,49 +39,24 @@ script = ExtResource( 10 )
 position = Vector2( -960, -540 )
 
 [node name="Sprite" type="Sprite" parent="Ship"]
-scale = Vector2( 0.75, 0.75 )
+scale = Vector2( 0.4, 0.4 )
 z_index = -1
 texture = ExtResource( 3 )
 
-[node name="TopLeftCollision" type="CollisionPolygon2D" parent="Ship"]
-visible = false
-polygon = PoolVector2Array( -384.003, 8.18652, -403.481, 8.18652, -399.985, -52.7446, -385.501, -120.668, -359.031, -183.097, -321.574, -244.528, -273.628, -296.469, -218.19, -339.421, -158.758, -371.385, -95.8287, -391.362, -39.3925, -402.35, 19.0415, -403.848, 18.5421, -383.371, -35.8964, -382.872, -86.3394, -374.381, -133.286, -360.397, -177.736, -340.42, -218.69, -315.448, -256.647, -286.481, -293.605, -248.024, -327.567, -201.576, -350.541, -155.129, -363.027, -123.664, -378.01, -77.217, -382.505, -33.7661 )
-disabled = true
-
-[node name="TopRightCollision" type="CollisionPolygon2D" parent="Ship"]
-visible = false
-rotation = -3.14159
-scale = Vector2( 1, -1 )
-polygon = PoolVector2Array( -384.003, 8.18652, -403.481, 8.18652, -399.985, -52.7446, -385.501, -120.668, -359.031, -183.097, -321.574, -244.528, -273.628, -296.469, -218.19, -339.421, -158.758, -371.385, -95.8287, -391.362, -39.3925, -402.35, 19.0415, -403.848, 18.5421, -383.371, -35.8964, -382.872, -86.3394, -374.381, -133.286, -360.397, -177.736, -340.42, -218.69, -315.448, -256.647, -286.481, -293.605, -248.024, -327.567, -201.576, -350.541, -155.129, -363.027, -123.664, -378.01, -77.217, -382.505, -33.7661 )
-disabled = true
-
-[node name="BottomLeftCollision" type="CollisionPolygon2D" parent="Ship"]
-visible = false
-scale = Vector2( 1, -1 )
-polygon = PoolVector2Array( -384.003, 8.18652, -403.481, 8.18652, -399.985, -52.7446, -385.501, -120.668, -359.031, -183.097, -321.574, -244.528, -273.628, -296.469, -218.19, -339.421, -158.758, -371.385, -95.8287, -391.362, -39.3925, -402.35, 19.0415, -403.848, 18.5421, -383.371, -35.8964, -382.872, -86.3394, -374.381, -133.286, -360.397, -177.736, -340.42, -218.69, -315.448, -256.647, -286.481, -293.605, -248.024, -327.567, -201.576, -350.541, -155.129, -363.027, -123.664, -378.01, -77.217, -382.505, -33.7661 )
-disabled = true
-
-[node name="BottomRightCollision" type="CollisionPolygon2D" parent="Ship"]
-visible = false
-rotation = -3.14159
-polygon = PoolVector2Array( -384.003, 8.18652, -403.481, 8.18652, -399.985, -52.7446, -385.501, -120.668, -359.031, -183.097, -321.574, -244.528, -273.628, -296.469, -218.19, -339.421, -158.758, -371.385, -95.8287, -391.362, -39.3925, -402.35, 19.0415, -403.848, 18.5421, -383.371, -35.8964, -382.872, -86.3394, -374.381, -133.286, -360.397, -177.736, -340.42, -218.69, -315.448, -256.647, -286.481, -293.605, -248.024, -327.567, -201.576, -350.541, -155.129, -363.027, -123.664, -378.01, -77.217, -382.505, -33.7661 )
-disabled = true
-one_way_collision_margin = 0.0
-
 [node name="Driving" type="KinematicBody2D" parent="Ship"]
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.4, 0.4 )
 z_index = 1
 
 [node name="Sprite" type="Sprite" parent="Ship/Driving"]
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ship/Driving"]
-visible = false
 position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
 [node name="Rocket" type="Node2D" parent="Ship"]
-position = Vector2( -428, 0 )
+position = Vector2( -230, 0 )
+scale = Vector2( 0.65, 0.65 )
 script = ExtResource( 8 )
 
 [node name="Rocket" type="Sprite" parent="Ship/Rocket"]
@@ -101,7 +79,8 @@ wait_time = 0.05
 autostart = true
 
 [node name="GunTop" type="KinematicBody2D" parent="Ship"]
-position = Vector2( 0, -392 )
+position = Vector2( 0, -210 )
+scale = Vector2( 0.65, 0.65 )
 z_index = 2
 
 [node name="GunTop" type="Sprite" parent="Ship/GunTop"]
@@ -118,6 +97,11 @@ shape = SubResource( 2 )
 position = Vector2( 0, -130 )
 
 [node name="Tween" type="Tween" parent="Ship"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ship"]
+visible = false
+shape = SubResource( 3 )
+disabled = true
 
 [node name="Game" type="Node2D" parent="."]
 script = ExtResource( 7 )

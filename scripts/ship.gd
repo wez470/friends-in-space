@@ -9,14 +9,14 @@ puppet var puppet_pos: Vector2 setget puppet_pos_set
 var initialized: bool = false
 var rocket_pos: float = PI
 
-func _process(delta):
+func _process(_delta):
 	if !is_network_master():
 		if not tween.is_active() && initialized:
 			print(puppet_pos)
 			set_global_position(puppet_pos)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_network_master() && engine_firing:
 		var rocket = get_node("Rocket")
 		var force_direction = rocket.global_position.direction_to(global_position)

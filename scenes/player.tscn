@@ -7,15 +7,19 @@
 [node name="KinematicBody2D" type="KinematicBody2D"]
 scale = Vector2( 0.15, 0.15 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 speed = 300
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -1.05945, 7.41626 )
 scale = Vector2( 0.994745, 2.02856 )
-polygon = PoolVector2Array( 2.767, -65, 126.314, 56, -124.33, 56 )
+polygon = PoolVector2Array( 2.89166, -50.4476, 93.5307, 40.4371, -87.7474, 40.4371 )
 
 [node name="NetworkTick" type="Timer" parent="."]
 wait_time = 0.05
@@ -27,10 +31,10 @@ autostart = true
 z_index = 5
 
 [node name="Username" type="Label" parent="Username"]
-margin_left = -951.385
-margin_top = 109.236
-margin_right = -317.385
-margin_bottom = 197.236
+margin_left = -949.049
+margin_top = 75.6001
+margin_right = -315.049
+margin_bottom = 163.6
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0.117647, 0.117647, 0.117647, 1 )
