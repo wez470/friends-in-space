@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/level1.gd" type="Script" id=1]
 [ext_resource path="res://audio/network-game.ogg" type="AudioStream" id=2]
@@ -10,6 +10,14 @@
 [ext_resource path="res://scripts/rocket.gd" type="Script" id=8]
 [ext_resource path="res://sprites/gun.png" type="Texture" id=9]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=10]
+[ext_resource path="res://scripts/gun.gd" type="Script" id=11]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=12]
+
+[sub_resource type="Gradient" id=4]
+colors = PoolColorArray( 0.101961, 0, 0.329412, 1, 0.239216, 0.227451, 0.380392, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.5415, 44.1826 )
@@ -22,6 +30,21 @@ radius = 214.372
 
 [node name="root" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -100
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+margin_left = -4096.0
+margin_top = -4096.0
+margin_right = 4096.0
+margin_bottom = 4096.0
+texture = SubResource( 5 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -82,6 +105,7 @@ autostart = true
 position = Vector2( 0, -210 )
 scale = Vector2( 0.65, 0.65 )
 z_index = 2
+script = ExtResource( 11 )
 
 [node name="GunTop" type="Sprite" parent="Ship/GunTop"]
 scale = Vector2( 0.5, 0.5 )
@@ -95,6 +119,90 @@ shape = SubResource( 2 )
 
 [node name="BulletSpawn" type="Node2D" parent="Ship/GunTop"]
 position = Vector2( 0, -130 )
+
+[node name="Tween" type="Tween" parent="Ship/GunTop"]
+
+[node name="NetworkTick" type="Timer" parent="Ship/GunTop"]
+wait_time = 0.05
+autostart = true
+
+[node name="GunRight" type="KinematicBody2D" parent="Ship"]
+position = Vector2( 210, 0 )
+rotation = 1.5708
+scale = Vector2( 0.65, 0.65 )
+z_index = 2
+script = ExtResource( 11 )
+
+[node name="GunRight" type="Sprite" parent="Ship/GunRight"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )
+centered = false
+offset = Vector2( -80, -220 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ship/GunRight"]
+position = Vector2( 0, 0.499451 )
+shape = SubResource( 2 )
+
+[node name="BulletSpawn" type="Node2D" parent="Ship/GunRight"]
+position = Vector2( 0, -130 )
+
+[node name="Tween" type="Tween" parent="Ship/GunRight"]
+
+[node name="NetworkTick" type="Timer" parent="Ship/GunRight"]
+wait_time = 0.05
+autostart = true
+
+[node name="GunBottom" type="KinematicBody2D" parent="Ship"]
+position = Vector2( 0, 210 )
+rotation = 3.14159
+scale = Vector2( 0.65, 0.65 )
+z_index = 2
+script = ExtResource( 11 )
+
+[node name="GunBottom" type="Sprite" parent="Ship/GunBottom"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )
+centered = false
+offset = Vector2( -80, -220 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ship/GunBottom"]
+position = Vector2( 0, 0.499451 )
+shape = SubResource( 2 )
+
+[node name="BulletSpawn" type="Node2D" parent="Ship/GunBottom"]
+position = Vector2( 0, -130 )
+
+[node name="Tween" type="Tween" parent="Ship/GunBottom"]
+
+[node name="NetworkTick" type="Timer" parent="Ship/GunBottom"]
+wait_time = 0.05
+autostart = true
+
+[node name="GunLeft" type="KinematicBody2D" parent="Ship"]
+position = Vector2( -210, 0 )
+rotation = 4.71239
+scale = Vector2( 0.65, 0.65 )
+z_index = 2
+script = ExtResource( 11 )
+
+[node name="GunLeft" type="Sprite" parent="Ship/GunLeft"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )
+centered = false
+offset = Vector2( -80, -220 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ship/GunLeft"]
+position = Vector2( 0, 0.499451 )
+shape = SubResource( 2 )
+
+[node name="BulletSpawn" type="Node2D" parent="Ship/GunLeft"]
+position = Vector2( 0, -130 )
+
+[node name="Tween" type="Tween" parent="Ship/GunLeft"]
+
+[node name="NetworkTick" type="Timer" parent="Ship/GunLeft"]
+wait_time = 0.05
+autostart = true
 
 [node name="Tween" type="Tween" parent="Ship"]
 
@@ -112,5 +220,13 @@ script = ExtResource( 7 )
 wait_time = 0.05
 autostart = true
 
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 12 )
+
 [connection signal="timeout" from="Ship/Rocket/NetworkTick" to="Ship/Rocket" method="_on_NetworkTick_timeout"]
+[connection signal="timeout" from="Ship/GunTop/NetworkTick" to="Ship/GunTop" method="_on_NetworkTick_timeout"]
+[connection signal="timeout" from="Ship/GunRight/NetworkTick" to="Ship/GunRight" method="_on_NetworkTick_timeout"]
+[connection signal="timeout" from="Ship/GunBottom/NetworkTick" to="Ship/GunBottom" method="_on_NetworkTick_timeout"]
+[connection signal="timeout" from="Ship/GunLeft/NetworkTick" to="Ship/GunLeft" method="_on_NetworkTick_timeout"]
 [connection signal="timeout" from="NetworkTick" to="Ship" method="_on_NetworkTick_timeout"]

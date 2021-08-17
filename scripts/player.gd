@@ -19,12 +19,24 @@ var driving: bool = false
 var curr_firing_engine = false
 var curr_steering_input = Global.Input.NONE
 var rocket_rotation: float = PI
-var fire_rate: int = 250000 # microseconds
-var last_fire_ticks = 0
+var curr_rotation_input = Global.Input.NONE
+var firing: bool = false
+# Top Gun
 var gun_top: KinematicBody2D
 var gun_top_collision: bool = false
 var using_gun_top: bool = false
-var gun_top_rotation: float = 0
+# Right Gun
+var gun_right: KinematicBody2D
+var gun_right_collision: bool = false
+var using_gun_right: bool = false
+# Bottom Gun
+var gun_bottom: KinematicBody2D
+var gun_bottom_collision: bool = false
+var using_gun_bottom: bool = false
+# Left Gun
+var gun_left: KinematicBody2D
+var gun_left_collision: bool = false
+var using_gun_left: bool = false
 
 puppet var puppet_pos: Vector2 setget puppet_pos_set
 
@@ -32,6 +44,9 @@ func _ready():
 	ship = get_node("/root/root/Ship")
 	driving_module = get_node("/root/root/Ship/Driving")
 	gun_top = get_node("/root/root/Ship/GunTop")
+	gun_right = get_node("/root/root/Ship/GunRight")
+	gun_bottom = get_node("/root/root/Ship/GunBottom")
+	gun_left = get_node("/root/root/Ship/GunLeft")
 	game = get_node("/root/root/Game")
 	if is_network_master():
 		get_node("NetworkTick").start()
@@ -43,6 +58,12 @@ func _physics_process(_delta):
 			handle_driving()
 		elif using_gun_top:
 			handle_gun_top()
+		elif using_gun_right:
+			handle_gun_right()
+		elif using_gun_bottom:
+			handle_gun_bottom()
+		elif using_gun_left:
+			handle_gun_left()
 		else:
 			handle_movement()
 	else:
@@ -71,21 +92,83 @@ func handle_driving():
 
 
 func handle_gun_top():
-	if Input.is_action_pressed("right"):
-		gun_top_rotation += PI/150
+	var new_input = Global.Input.NONE
+	if Input.is_action_pressed("right") && Input.is_action_pressed("left"):
+		new_input = Global.Input.NONE
+	elif Input.is_action_pressed("right"):
+		new_input = Global.Input.RIGHT
 	if Input.is_action_pressed("left"):
-		gun_top_rotation -= PI/150
-	gun_top_rotation = clamp(gun_top_rotation, -PI/2, PI/2) # 180 degrees motion
-	gun_top.rotation = gun_top_rotation
+		new_input = Global.Input.LEFT
+	if curr_rotation_input != new_input:
+		gun_top.rpc_id(Global.SERVER_ID, "set_rotation_input", new_input)
+		curr_rotation_input = new_input
 	
-	if Input.is_action_pressed("action"):
-		var curr_ticks = OS.get_ticks_usec()
-		if (curr_ticks - last_fire_ticks) > fire_rate:
-			last_fire_ticks = curr_ticks
-			var bullet: KinematicBody2D = preload("res://scenes/bullet.tscn").instance()
-			bullet.position = gun_top.get_node("BulletSpawn").global_position
-			bullet.rotation = gun_top.rotation
-			get_node("/root/root/Bullets").add_child(bullet)
+	if Input.is_action_pressed("action") && !firing:
+		firing = true
+		gun_top.rpc_id(Global.SERVER_ID, "set_firing", true)
+	elif !Input.is_action_pressed("action") && firing:
+		firing = false
+		gun_top.rpc_id(Global.SERVER_ID, "set_firing", false)
+		
+		
+func handle_gun_right():
+	var new_input = Global.Input.NONE
+	if Input.is_action_pressed("right") && Input.is_action_pressed("left"):
+		new_input = Global.Input.NONE
+	elif Input.is_action_pressed("right"):
+		new_input = Global.Input.RIGHT
+	if Input.is_action_pressed("left"):
+		new_input = Global.Input.LEFT
+	if curr_rotation_input != new_input:
+		gun_right.rpc_id(Global.SERVER_ID, "set_rotation_input", new_input)
+		curr_rotation_input = new_input
+	
+	if Input.is_action_pressed("action") && !firing:
+		firing = true
+		gun_right.rpc_id(Global.SERVER_ID, "set_firing", true)
+	elif !Input.is_action_pressed("action") && firing:
+		firing = false
+		gun_right.rpc_id(Global.SERVER_ID, "set_firing", false)
+
+
+func handle_gun_bottom():
+	var new_input = Global.Input.NONE
+	if Input.is_action_pressed("right") && Input.is_action_pressed("left"):
+		new_input = Global.Input.NONE
+	elif Input.is_action_pressed("right"):
+		new_input = Global.Input.RIGHT
+	if Input.is_action_pressed("left"):
+		new_input = Global.Input.LEFT
+	if curr_rotation_input != new_input:
+		gun_bottom.rpc_id(Global.SERVER_ID, "set_rotation_input", new_input)
+		curr_rotation_input = new_input
+	
+	if Input.is_action_pressed("action") && !firing:
+		firing = true
+		gun_bottom.rpc_id(Global.SERVER_ID, "set_firing", true)
+	elif !Input.is_action_pressed("action") && firing:
+		firing = false
+		gun_bottom.rpc_id(Global.SERVER_ID, "set_firing", false)
+
+
+func handle_gun_left():
+	var new_input = Global.Input.NONE
+	if Input.is_action_pressed("right") && Input.is_action_pressed("left"):
+		new_input = Global.Input.NONE
+	elif Input.is_action_pressed("right"):
+		new_input = Global.Input.RIGHT
+	if Input.is_action_pressed("left"):
+		new_input = Global.Input.LEFT
+	if curr_rotation_input != new_input:
+		gun_left.rpc_id(Global.SERVER_ID, "set_rotation_input", new_input)
+		curr_rotation_input = new_input
+	
+	if Input.is_action_pressed("action") && !firing:
+		firing = true
+		gun_left.rpc_id(Global.SERVER_ID, "set_firing", true)
+	elif !Input.is_action_pressed("action") && firing:
+		firing = false
+		gun_left.rpc_id(Global.SERVER_ID, "set_firing", false)
 
 
 func set_movement_from_input():
@@ -114,11 +197,20 @@ func handle_movement():
 			driving_module_collision = true
 		elif collision_obj.get_instance_id() == gun_top.get_instance_id():
 			gun_top_collision = true
+		elif collision_obj.get_instance_id() == gun_right.get_instance_id():
+			gun_right_collision = true
+		elif collision_obj.get_instance_id() == gun_bottom.get_instance_id():
+			gun_bottom_collision = true
+		elif collision_obj.get_instance_id() == gun_left.get_instance_id():
+			gun_left_collision = true
 	else:
 		# Only reset module collisions if we're moving away from the module
 		if velocity.x != 0 || velocity.y != 0:
 			driving_module_collision = false
 			gun_top_collision = false
+			gun_right_collision = false
+			gun_bottom_collision = false
+			gun_left_collision = false
 
 	# Lock player to ship radius. Do this manually to avoid Rigibody2D collision physics with the ship
 	var ship_sprite: Sprite = ship.get_node("Sprite")
@@ -154,6 +246,15 @@ func _unhandled_input(event):
 			elif gun_top_collision && !using_gun_top || using_gun_top:
 				print("Toggled gun top module")
 				game.rpc_id(Global.SERVER_ID, "toggle_gun_top_use")
+			elif gun_right_collision && !using_gun_right || using_gun_right:
+				print("Toggled gun right module")
+				game.rpc_id(Global.SERVER_ID, "toggle_gun_right_use")
+			elif gun_bottom_collision && !using_gun_bottom || using_gun_bottom:
+				print("Toggled gun bottom module")
+				game.rpc_id(Global.SERVER_ID, "toggle_gun_bottom_use")
+			elif gun_left_collision && !using_gun_left || using_gun_left:
+				print("Toggled gun left module")
+				game.rpc_id(Global.SERVER_ID, "toggle_gun_left_use")	
 
 
 remotesync func set_driving_module_use(drive: bool):
@@ -165,6 +266,33 @@ remotesync func set_driving_module_use(drive: bool):
 		
 
 
-master func set_gun_top_use(using: bool):
+remotesync func set_gun_top_use(using: bool):
 	print("Set gun top usage from server: ", using)
 	using_gun_top = using
+	if !using_gun_top:
+		gun_top.rpc_id(Global.SERVER_ID, "set_rotation_input", Global.Input.NONE)
+		gun_top.rpc_id(Global.SERVER_ID, "set_firing", false)
+		
+		
+remotesync func set_gun_right_use(using: bool):
+	print("Set gun right usage from server: ", using)
+	using_gun_right = using
+	if !using_gun_right:
+		gun_right.rpc_id(Global.SERVER_ID, "set_rotation_input", Global.Input.NONE)
+		gun_right.rpc_id(Global.SERVER_ID, "set_firing", false)
+		
+		
+remotesync func set_gun_bottom_use(using: bool):
+	print("Set gun bottom usage from server: ", using)
+	using_gun_bottom = using
+	if !using_gun_bottom:
+		gun_bottom.rpc_id(Global.SERVER_ID, "set_rotation_input", Global.Input.NONE)
+		gun_bottom.rpc_id(Global.SERVER_ID, "set_firing", false)
+		
+		
+remotesync func set_gun_left_use(using: bool):
+	print("Set gun left usage from server: ", using)
+	using_gun_left = using
+	if !using_gun_left:
+		gun_left.rpc_id(Global.SERVER_ID, "set_rotation_input", Global.Input.NONE)
+		gun_left.rpc_id(Global.SERVER_ID, "set_firing", false)

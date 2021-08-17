@@ -9,6 +9,22 @@ puppet var puppet_pos: Vector2 setget puppet_pos_set
 var initialized: bool = false
 var rocket_pos: float = PI
 
+
+func _ready():
+	var gun_top = get_node("GunTop")
+	gun_top.max_rotation = PI/2
+	gun_top.min_rotation = -PI/2
+	var gun_right = get_node("GunRight")
+	gun_right.max_rotation = PI
+	gun_right.min_rotation = 0
+	var gun_bottom = get_node("GunBottom")
+	gun_bottom.max_rotation = 3*PI/2
+	gun_bottom.min_rotation = PI/2
+	var gun_left = get_node("GunLeft")
+	gun_left.max_rotation = 2*PI
+	gun_left.min_rotation = PI
+
+
 func _process(_delta):
 	if !is_network_master():
 		if not tween.is_active() && initialized:
