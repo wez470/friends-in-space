@@ -12,6 +12,7 @@ onready var username = $SetupUI/Username
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	var err = get_tree().connect("connected_to_server", self, "_connected_to_server")
 	if err != OK:
 		print(err)

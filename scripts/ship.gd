@@ -28,7 +28,6 @@ func _ready():
 func _process(_delta):
 	if !is_network_master():
 		if not tween.is_active() && initialized:
-			print(puppet_pos)
 			set_global_position(puppet_pos)
 
 
@@ -51,8 +50,7 @@ func puppet_pos_set(new_value) -> void:
 
 func _on_NetworkTick_timeout():
 	if is_network_master():
-		rset("engine_firing", engine_firing)
-		rset("puppet_pos", global_position)
+		rset_unreliable("puppet_pos", global_position)
 
 
 mastersync func set_steering_input(input):

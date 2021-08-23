@@ -58,5 +58,5 @@ func puppet_pos_set(new_value) -> void:
 
 func _on_NetworkTick_timeout():
 	if is_network_master():
-		rset("puppet_pos", puppet_pos)
+		rset_unreliable("puppet_pos", puppet_pos)
 		rset("puppet_engine_firing", puppet_engine_firing)

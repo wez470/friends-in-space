@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://sprites/enemy.png" type="Texture" id=1]
+[ext_resource path="res://scripts/enemy.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 20.6667
+height = 38.2419
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 17.0
+height = 26.0796
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 16.8818
+height = 26.1587
+
+[node name="Enemy" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 17
+gravity_scale = 0.0
+contacts_reported = 15
+contact_monitor = true
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="HeadCollider" type="CollisionShape2D" parent="."]
+position = Vector2( 1.16217, 38 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="BodyOneCollider" type="CollisionShape2D" parent="."]
+position = Vector2( 1.79279, 16.6306 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="BodyTwoCollider" type="CollisionShape2D" parent="."]
+position = Vector2( 1.83786, -2.37838 )
+rotation = -1.5708
+shape = SubResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="NetworkTick" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="timeout" from="NetworkTick" to="." method="_on_NetworkTick_timeout"]
