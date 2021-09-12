@@ -17,7 +17,7 @@ func _ready():
 		get_node("NetworkTick").start()
 
 
-func _integrate_forces(state):
+func _integrate_forces(_state):
 	if is_network_master():
 		var force_direction = global_position.direction_to(ship.global_position)
 		rotation = force_direction.angle() + -PI/2

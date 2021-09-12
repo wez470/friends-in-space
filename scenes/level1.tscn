@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/level1.gd" type="Script" id=1]
 [ext_resource path="res://audio/network-game.ogg" type="AudioStream" id=2]
@@ -8,21 +8,16 @@
 [ext_resource path="res://sprites/flame.png" type="Texture" id=6]
 [ext_resource path="res://scripts/game.gd" type="Script" id=7]
 [ext_resource path="res://scripts/rocket.gd" type="Script" id=8]
+[ext_resource path="res://sprites/background-space-stars3.png" type="Texture" id=9]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=10]
 [ext_resource path="res://scripts/camera.gd" type="Script" id=12]
 [ext_resource path="res://scripts/enemy_spawner.gd" type="Script" id=13]
 [ext_resource path="res://scenes/gun.tscn" type="PackedScene" id=14]
 
-[sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 0.121569, 0.0901961, 0.192157, 1, 0.388235, 0.376471, 0.560784, 1 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 15.5415, 44.1826 )
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=4]
 radius = 212.875
 
 [node name="root" type="Node2D"]
@@ -32,13 +27,15 @@ script = ExtResource( 1 )
 z_index = -100
 
 [node name="TextureRect" type="TextureRect" parent="Background"]
-margin_left = -4086.29
-margin_top = -4092.63
+margin_left = -4096.0
+margin_top = -4096.0
 margin_right = 4105.71
 margin_bottom = 4099.37
-texture = SubResource( 2 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 9 )
 expand = true
-stretch_mode = 1
+stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -120,7 +117,8 @@ rotation = 4.71239
 [node name="Tween" type="Tween" parent="Ship"]
 
 [node name="BodyCollider" type="CollisionShape2D" parent="Ship"]
-shape = SubResource( 5 )
+visible = false
+shape = SubResource( 4 )
 one_way_collision_margin = 0.0
 
 [node name="Game" type="Node2D" parent="."]

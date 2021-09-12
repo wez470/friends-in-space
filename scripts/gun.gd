@@ -4,6 +4,7 @@ const rotation_speed: float = PI/100
 const fire_rate: int = 250000 # microseconds
 
 onready var tween = $Tween
+onready var laser_sound = $LaserSound
 
 var initialized: bool = false
 var max_rotation: float = PI/2
@@ -72,3 +73,4 @@ remotesync func create_bullet(pos: Vector2, rotation: float, player_id: int):
 	bullet.rotation = rotation
 	bullet.set_network_master(player_id)
 	get_node("/root/root/Bullets").add_child(bullet)
+	laser_sound.play()
