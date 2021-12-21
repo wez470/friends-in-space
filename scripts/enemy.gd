@@ -1,6 +1,6 @@
-extends RigidBody2D
+extends KinematicBody2D
 
-const speed: int = 20
+const speed: int = 30
 
 onready var tween = $Tween
 
@@ -17,20 +17,27 @@ func _ready():
 		get_node("NetworkTick").start()
 
 
-func _integrate_forces(_state):
-	if is_network_master():
-		var force_direction = global_position.direction_to(ship.global_position)
-		rotation = force_direction.angle() + -PI/2
-		applied_force = force_direction.normalized() * speed
-		puppet_pos = position
+#func _integrate_forces(_state):
+#	if is_network_master():
+#		var force_direction = global_position.direction_to(ship.global_position)
+#		rotation = force_direction.angle() - PI/2
+#		applied_force = force_direction.normalized() * speed
+#		puppet_pos = position
 
 
 func _process(_delta):
 	if !is_network_master():
 		var direction = global_position.direction_to(ship.global_position)
-		rotation = direction.angle() + -PI/2
+		rotation = direction.angle() - PI/2
 		if !tween.is_active() && initialized:
 			position = puppet_pos
+
+
+func _physics_process(delta):
+	var force_direction = global_position.direction_to(ship.global_position)
+	rotation = force_direction.angle() - PI/2
+	var applied_force = force_direction.normalized() * speed * delta
+	move_and_collide(applied_force)
 
 
 func puppet_pos_set(new_value) -> void:

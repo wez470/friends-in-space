@@ -31,7 +31,8 @@ func _process(_delta):
 			set_global_position(puppet_pos)
 
 
-func _physics_process(_delta):
+#func _physics_process(_delta): # TODO: Should this be physics process or integrate forces?
+func _integrate_forces(_delta):
 	if is_network_master() && engine_firing:
 		var rocket = get_node("Rocket")
 		var force_direction = rocket.global_position.direction_to(global_position)

@@ -1,7 +1,7 @@
 extends Node2D
 
 const spawn_locations = [Vector2(-1060, -640), Vector2(-354, -640), Vector2(354, -640), Vector2(1060, -640), Vector2(1060, 0), Vector2(-1060, 640), Vector2(-354, 640), Vector2(354, 640), Vector2(1060, 640), Vector2(-1060, 0)]
-const MAX_ENEMIES: int = 100 
+const MAX_ENEMIES: int = 5
 
 #var spawn_rate: int = 5000000 # 5 seconds
 var spawn_rate: int = 1000000 # 1 second for testing
@@ -29,7 +29,7 @@ func _process(_delta):
 
 
 remotesync func spawn_enemy(location: Vector2, id: int):
-	var enemy: RigidBody2D = preload("res://scenes/enemy.tscn").instance()
+	var enemy: KinematicBody2D = preload("res://scenes/enemy.tscn").instance()
 	enemy.global_position = location
 	enemy.set_name("enemy-%d" % id)
 	add_child(enemy)

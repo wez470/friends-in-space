@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/level1.gd" type="Script" id=1]
 [ext_resource path="res://audio/network-game.ogg" type="AudioStream" id=2]
@@ -10,15 +10,18 @@
 [ext_resource path="res://scripts/rocket.gd" type="Script" id=8]
 [ext_resource path="res://sprites/background-space-stars3.png" type="Texture" id=9]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=10]
-[ext_resource path="res://scripts/camera.gd" type="Script" id=12]
+[ext_resource path="res://scenes/wall_flat.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scripts/enemy_spawner.gd" type="Script" id=13]
 [ext_resource path="res://scenes/gun.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/wall_jagged.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/asteroid.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/minimap.tscn" type="PackedScene" id=17]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.5415, 44.1826 )
 
-[sub_resource type="CircleShape2D" id=4]
-radius = 212.875
+[sub_resource type="CircleShape2D" id=2]
+radius = 216.344
 
 [node name="root" type="Node2D"]
 script = ExtResource( 1 )
@@ -26,18 +29,18 @@ script = ExtResource( 1 )
 [node name="Background" type="Node2D" parent="."]
 z_index = -100
 
-[node name="TextureRect" type="TextureRect" parent="Background"]
-margin_left = -4096.0
-margin_top = -4096.0
-margin_right = 4105.71
-margin_bottom = 4099.37
+[node name="Image" type="TextureRect" parent="Background"]
+margin_left = -15000.0
+margin_top = -15000.0
+margin_right = 15000.0
+margin_bottom = 15000.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 9 )
 expand = true
 stretch_mode = 2
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Audio" type="Node2D" parent="."]
@@ -52,6 +55,8 @@ collision_mask = 8
 mode = 2
 mass = 102.041
 gravity_scale = 0.0
+contacts_reported = 5
+contact_monitor = true
 script = ExtResource( 10 )
 
 [node name="Players" type="Node2D" parent="Ship"]
@@ -73,7 +78,7 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ship/Driving"]
 position = Vector2( 0, 12 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Rocket" type="Node2D" parent="Ship"]
 position = Vector2( -230, 0 )
@@ -117,9 +122,16 @@ rotation = 4.71239
 [node name="Tween" type="Tween" parent="Ship"]
 
 [node name="BodyCollider" type="CollisionShape2D" parent="Ship"]
-visible = false
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 one_way_collision_margin = 0.0
+
+[node name="Camera" type="Camera2D" parent="Ship"]
+scale = Vector2( 1.2, 1.2 )
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_top = 0.1
+drag_margin_bottom = 0.1
 
 [node name="Game" type="Node2D" parent="."]
 script = ExtResource( 7 )
@@ -130,16 +142,186 @@ script = ExtResource( 7 )
 wait_time = 0.05
 autostart = true
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2( 960, 540 )
-current = true
-script = ExtResource( 12 )
-
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource( 13 )
 
 [node name="SpawnIncrease" type="Timer" parent="EnemySpawner"]
 wait_time = 15.0
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="wall1" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( -153.457, 359.472 )
+
+[node name="root" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( -105.624, 1340.59 )
+
+[node name="root2" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( 3083.32, 1432.17 )
+
+[node name="Node2D" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -4.11475, -602.892 )
+
+[node name="Node2D2" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 2165.1, -457.874 )
+rotation = 2.01436
+
+[node name="Node2D3" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 2440.37, -1141.31 )
+rotation = -1.14073
+
+[node name="Node2D4" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 1959.62, -942.466 )
+rotation = -2.69762
+
+[node name="Node2D5" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 2651.8, -650.495 )
+rotation = 0.385882
+
+[node name="root3" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( 2306.97, -793.963 )
+rotation = 0.428015
+
+[node name="Asteroid" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 1828.94, 1057.45 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Asteroid2" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 2052.09, 1475.19 )
+rotation = -0.863836
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Asteroid3" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 1576.4, 1468.84 )
+rotation = -2.91043
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Asteroid4" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 477.075, -2350.19 )
+
+[node name="Asteroid5" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( -1413.06, -1840.09 )
+
+[node name="Asteroid6" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( -1205.29, -3725.96 )
+
+[node name="Asteroid7" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( -3554.64, -2990.79 )
+
+[node name="Asteroid8" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 1911.19, -4221.4 )
+
+[node name="Asteroid9" parent="Level" instance=ExtResource( 16 )]
+position = Vector2( 376.922, -6043.34 )
+
+[node name="WallJagged" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -248.302, 2205.47 )
+rotation = 0.488994
+
+[node name="Node2D6" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 1140.79, 5426.35 )
+rotation = 2.01436
+scale = Vector2( 2, 2 )
+
+[node name="Node2D7" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 1718.44, 3614.03 )
+rotation = -1.14073
+scale = Vector2( 2, 2 )
+
+[node name="Node2D8" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 572.458, 4390.75 )
+rotation = -2.69762
+scale = Vector2( 2, 2 )
+
+[node name="Node2D9" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( 2232.25, 4615.53 )
+rotation = 0.385882
+scale = Vector2( 2, 2 )
+
+[node name="WallFlat" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( 1444.7, 4616.75 )
+rotation = 3.66712
+scale = Vector2( 2, 2 )
+
+[node name="Node2D10" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -3490.29, 5577.2 )
+rotation = 2.01436
+scale = Vector2( 2, 2 )
+
+[node name="Node2D11" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -2912.63, 3764.88 )
+rotation = -1.14073
+scale = Vector2( 2, 2 )
+
+[node name="Node2D12" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -4058.62, 4541.6 )
+rotation = -2.69762
+scale = Vector2( 2, 2 )
+
+[node name="Node2D13" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -2398.82, 4766.38 )
+rotation = 0.385882
+scale = Vector2( 2, 2 )
+
+[node name="WallFlat2" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( -3186.38, 4767.59 )
+rotation = 3.66712
+scale = Vector2( 2, 2 )
+
+[node name="Node2D14" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -1197.38, 9182.51 )
+rotation = 2.01436
+scale = Vector2( 2, 2 )
+
+[node name="Node2D15" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -619.724, 7370.18 )
+rotation = -1.14073
+scale = Vector2( 2, 2 )
+
+[node name="Node2D16" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -1765.71, 8146.91 )
+rotation = -2.69762
+scale = Vector2( 2, 2 )
+
+[node name="Node2D17" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -105.915, 8371.68 )
+rotation = 0.385882
+scale = Vector2( 2, 2 )
+
+[node name="WallFlat3" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( -893.467, 8372.9 )
+rotation = 3.66712
+scale = Vector2( 2, 2 )
+
+[node name="Node2D18" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -4209.81, 1159.42 )
+rotation = 2.01436
+scale = Vector2( 2, 2 )
+
+[node name="Node2D19" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -3632.16, -652.905 )
+rotation = -1.14073
+scale = Vector2( 2, 2 )
+
+[node name="Node2D20" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -4778.14, 123.821 )
+rotation = -2.69762
+scale = Vector2( 2, 2 )
+
+[node name="Node2D21" parent="Level" instance=ExtResource( 15 )]
+position = Vector2( -3118.35, 348.597 )
+rotation = 0.385882
+scale = Vector2( 2, 2 )
+
+[node name="WallFlat4" parent="Level" instance=ExtResource( 11 )]
+position = Vector2( -3905.9, 349.813 )
+rotation = 3.66712
+scale = Vector2( 2, 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Minimap" parent="CanvasLayer" instance=ExtResource( 17 )]
+visible = false
 
 [connection signal="timeout" from="Ship/Rocket/NetworkTick" to="Ship/Rocket" method="_on_NetworkTick_timeout"]
 [connection signal="timeout" from="NetworkTick" to="Ship" method="_on_NetworkTick_timeout"]

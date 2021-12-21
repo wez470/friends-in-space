@@ -154,7 +154,7 @@ func handle_movement():
 
 	# Lock player to ship radius. Do this manually to avoid Rigibody2D collision physics with the ship
 	var ship_sprite: Sprite = ship.get_node("Sprite")
-	var ship_radius = ship_sprite.texture.get_width() / 2.0 * ship_sprite.transform.get_scale().x - ship_wall_width
+	var ship_radius = (ship_sprite.texture.get_width() / 2.0) * ship_sprite.transform.get_scale().x - ship_wall_width
 	var ship_center_position = ship.global_position
 	var distance_to_ship_center: float = global_position.distance_to(ship_center_position)
 

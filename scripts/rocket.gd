@@ -1,7 +1,7 @@
 extends Node2D
 
 const rocket_to_center_distance: int = 230
-const rotation_speed: float = PI/200
+const rotation_speed: float = PI/180
 
 onready var tween = $Tween
 

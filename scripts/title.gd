@@ -1,7 +1,6 @@
 extends Control
 
 
-const DEFAULT_PORT: int = 28282
 const MAX_CLIENTS: int = 4
 
 var server: NetworkedMultiplayerENet = null
@@ -19,28 +18,32 @@ func _ready():
 	err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	if err != OK:
 		print(err)
-		
+
 
 func create_server() -> void:
 	server = NetworkedMultiplayerENet.new()
-	var err = server.create_server(DEFAULT_PORT, MAX_CLIENTS)
+	if Global.USE_UPNP:
+		Global.upnp = UPNP.new()
+		Global.upnp.discover(2000, 2, "InternetGatewayDevice")
+		Global.upnp.add_port_mapping(Global.DEFAULT_PORT)
+	var err = server.create_server(Global.DEFAULT_PORT, MAX_CLIENTS)
 	if err != OK:
 		print(err)
 	get_tree().set_network_peer(server)
-	
-	
+
+
 func join_server(ip: String) -> void:
 	client = NetworkedMultiplayerENet.new()
-	var err = client.create_client(ip, DEFAULT_PORT)
+	var err = client.create_client(ip, Global.DEFAULT_PORT)
 	if err != OK:
 		print(err)
 	get_tree().set_network_peer(client)
-	
-	
+
+
 func _server_disconnected() -> void:
 	print("disconnected from server title")
-	
-	
+
+
 func _connected_to_server() -> void:
 	print("connected to server title")
 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprites/Wall-Jagged.png" type="Texture" id=1]
+
+[node name="WallJagged" type="KinematicBody2D"]
+
+[node name="Wall-Jagged" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -218.019, -333.669 )
+scale = Vector2( 410.695, 17968 )
+build_mode = 1
+polygon = PoolVector2Array( -0.188139, -0.00872344, 1.08601, -0.00895717, 0.818092, 0.00090641, 1.24349, 0.0117984, 0.867177, 0.0236254, 1.14532, 0.0364807, 0.869222, 0.0462041, -0.169733, 0.0459703 )

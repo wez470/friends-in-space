@@ -21,7 +21,7 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Lifetime" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 autostart = true
 
 [connection signal="timeout" from="Lifetime" to="." method="_on_Lifetime_timeout"]
