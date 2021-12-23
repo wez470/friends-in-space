@@ -4,7 +4,7 @@ const speed: int = 30
 
 onready var tween = $Tween
 
-var ship: RigidBody2D
+var ship: KinematicBody2D
 var health: int = 2
 var initialized: bool = false
 

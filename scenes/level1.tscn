@@ -49,14 +49,9 @@ __meta__ = {
 stream = ExtResource( 2 )
 volume_db = -1.0
 
-[node name="Ship" type="RigidBody2D" parent="."]
+[node name="Ship" type="KinematicBody2D" parent="."]
 position = Vector2( 960, 540 )
 collision_mask = 8
-mode = 2
-mass = 102.041
-gravity_scale = 0.0
-contacts_reported = 5
-contact_monitor = true
 script = ExtResource( 10 )
 
 [node name="Players" type="Node2D" parent="Ship"]
@@ -117,7 +112,7 @@ rotation = 3.14159
 
 [node name="GunLeft" parent="Ship" instance=ExtResource( 14 )]
 position = Vector2( -210, 0 )
-rotation = 4.71239
+rotation = -1.5708
 
 [node name="Tween" type="Tween" parent="Ship"]
 
@@ -130,6 +125,7 @@ scale = Vector2( 1.2, 1.2 )
 current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
+smoothing_enabled = true
 drag_margin_top = 0.1
 drag_margin_bottom = 0.1
 

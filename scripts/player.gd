@@ -8,7 +8,7 @@ onready var tween = $Tween
 
 var velocity: Vector2 = Vector2()
 var num: int = 0
-var ship: RigidBody2D
+var ship: KinematicBody2D
 var game: Node2D
 var initialized: bool = false
 

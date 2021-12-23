@@ -9,7 +9,7 @@ var curr_input = Global.Input.NONE
 var curr_rotation = PI
 puppet var puppet_pos: Vector2 setget puppet_pos_set
 puppet var puppet_engine_firing: bool = false
-var ship: RigidBody2D
+var ship: KinematicBody2D
 var initialized: bool = false
 
 

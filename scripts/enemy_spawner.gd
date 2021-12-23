@@ -7,7 +7,7 @@ const MAX_ENEMIES: int = 5
 var spawn_rate: int = 1000000 # 1 second for testing
 var ticks_since_spawn: int = 0
 var rng = RandomNumberGenerator.new()
-var ship: RigidBody2D
+var ship: KinematicBody2D
 var enemy_id: int = 0
 
 func _ready():
