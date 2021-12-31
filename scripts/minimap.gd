@@ -15,7 +15,7 @@ func _ready():
 	var h = background.get_rect().size.y
 	map_scale = Vector2(map_container.get_rect().size.x / w, map_container.get_rect().size.y / h)
 	
-	var level_objects = get_node("/root/root/Level")
+	var level_objects = get_node("/root/root/Level/Map")
 	for obj in level_objects.get_children():
 		var dup = obj.duplicate()
 		dup.global_position = (map_scale * obj.global_position) + (map_container.get_rect().size / 2)

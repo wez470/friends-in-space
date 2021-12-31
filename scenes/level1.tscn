@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/level1.gd" type="Script" id=1]
 [ext_resource path="res://audio/network-game.ogg" type="AudioStream" id=2]
@@ -11,11 +11,14 @@
 [ext_resource path="res://sprites/background-space-stars3.png" type="Texture" id=9]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=10]
 [ext_resource path="res://scenes/wall_flat.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/environment/generator/generator.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scripts/enemy_spawner.gd" type="Script" id=13]
 [ext_resource path="res://scenes/gun.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/wall_jagged.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/asteroid.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/environment/asteroids/asteroid.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/minimap.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/environment/electricity.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/environment/asteroids/asteroid_spin.tscn" type="PackedScene" id=19]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.5415, 44.1826 )
@@ -146,173 +149,222 @@ wait_time = 15.0
 
 [node name="Level" type="Node2D" parent="."]
 
-[node name="wall1" parent="Level" instance=ExtResource( 11 )]
+[node name="Map" type="Node2D" parent="Level"]
+
+[node name="wall1" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( -153.457, 359.472 )
 
-[node name="root" parent="Level" instance=ExtResource( 11 )]
+[node name="root" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( -105.624, 1340.59 )
 
-[node name="root2" parent="Level" instance=ExtResource( 11 )]
+[node name="root2" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( 3083.32, 1432.17 )
 
-[node name="Node2D" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -4.11475, -602.892 )
 
-[node name="Node2D2" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D2" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 2165.1, -457.874 )
 rotation = 2.01436
 
-[node name="Node2D3" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D3" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 2440.37, -1141.31 )
 rotation = -1.14073
 
-[node name="Node2D4" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D4" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 1959.62, -942.466 )
 rotation = -2.69762
 
-[node name="Node2D5" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D5" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 2651.8, -650.495 )
 rotation = 0.385882
 
-[node name="root3" parent="Level" instance=ExtResource( 11 )]
+[node name="root3" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( 2306.97, -793.963 )
 rotation = 0.428015
 
-[node name="Asteroid" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 1828.94, 1057.45 )
 scale = Vector2( 0.5, 0.5 )
 
-[node name="Asteroid2" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid2" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 2052.09, 1475.19 )
 rotation = -0.863836
 scale = Vector2( 0.5, 0.5 )
 
-[node name="Asteroid3" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid3" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 1576.4, 1468.84 )
 rotation = -2.91043
 scale = Vector2( 0.5, 0.5 )
 
-[node name="Asteroid4" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid4" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 477.075, -2350.19 )
 
-[node name="Asteroid5" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid5" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( -1413.06, -1840.09 )
 
-[node name="Asteroid6" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid6" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( -1205.29, -3725.96 )
 
-[node name="Asteroid7" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid7" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( -3554.64, -2990.79 )
 
-[node name="Asteroid8" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid8" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 1911.19, -4221.4 )
 
-[node name="Asteroid9" parent="Level" instance=ExtResource( 16 )]
+[node name="Asteroid9" parent="Level/Map" instance=ExtResource( 16 )]
 position = Vector2( 376.922, -6043.34 )
 
-[node name="WallJagged" parent="Level" instance=ExtResource( 15 )]
+[node name="WallJagged" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -248.302, 2205.47 )
 rotation = 0.488994
 
-[node name="Node2D6" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D6" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 1140.79, 5426.35 )
 rotation = 2.01436
 scale = Vector2( 2, 2 )
 
-[node name="Node2D7" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D7" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 1718.44, 3614.03 )
 rotation = -1.14073
 scale = Vector2( 2, 2 )
 
-[node name="Node2D8" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D8" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 572.458, 4390.75 )
 rotation = -2.69762
 scale = Vector2( 2, 2 )
 
-[node name="Node2D9" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D9" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( 2232.25, 4615.53 )
 rotation = 0.385882
 scale = Vector2( 2, 2 )
 
-[node name="WallFlat" parent="Level" instance=ExtResource( 11 )]
+[node name="WallFlat" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( 1444.7, 4616.75 )
-rotation = 3.66712
+rotation = -2.61607
 scale = Vector2( 2, 2 )
 
-[node name="Node2D10" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D10" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -3490.29, 5577.2 )
 rotation = 2.01436
 scale = Vector2( 2, 2 )
 
-[node name="Node2D11" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D11" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -2912.63, 3764.88 )
 rotation = -1.14073
 scale = Vector2( 2, 2 )
 
-[node name="Node2D12" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D12" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -4058.62, 4541.6 )
 rotation = -2.69762
 scale = Vector2( 2, 2 )
 
-[node name="Node2D13" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D13" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -2398.82, 4766.38 )
 rotation = 0.385882
 scale = Vector2( 2, 2 )
 
-[node name="WallFlat2" parent="Level" instance=ExtResource( 11 )]
+[node name="WallFlat2" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( -3186.38, 4767.59 )
-rotation = 3.66712
+rotation = -2.61607
 scale = Vector2( 2, 2 )
 
-[node name="Node2D14" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D14" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -1197.38, 9182.51 )
 rotation = 2.01436
 scale = Vector2( 2, 2 )
 
-[node name="Node2D15" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D15" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -619.724, 7370.18 )
 rotation = -1.14073
 scale = Vector2( 2, 2 )
 
-[node name="Node2D16" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D16" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -1765.71, 8146.91 )
 rotation = -2.69762
 scale = Vector2( 2, 2 )
 
-[node name="Node2D17" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D17" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -105.915, 8371.68 )
 rotation = 0.385882
 scale = Vector2( 2, 2 )
 
-[node name="WallFlat3" parent="Level" instance=ExtResource( 11 )]
+[node name="WallFlat3" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( -893.467, 8372.9 )
-rotation = 3.66712
+rotation = -2.61607
 scale = Vector2( 2, 2 )
 
-[node name="Node2D18" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D18" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -4209.81, 1159.42 )
 rotation = 2.01436
 scale = Vector2( 2, 2 )
 
-[node name="Node2D19" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D19" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -3632.16, -652.905 )
 rotation = -1.14073
 scale = Vector2( 2, 2 )
 
-[node name="Node2D20" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D20" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -4778.14, 123.821 )
 rotation = -2.69762
 scale = Vector2( 2, 2 )
 
-[node name="Node2D21" parent="Level" instance=ExtResource( 15 )]
+[node name="Node2D21" parent="Level/Map" instance=ExtResource( 15 )]
 position = Vector2( -3118.35, 348.597 )
 rotation = 0.385882
 scale = Vector2( 2, 2 )
 
-[node name="WallFlat4" parent="Level" instance=ExtResource( 11 )]
+[node name="WallFlat4" parent="Level/Map" instance=ExtResource( 11 )]
 position = Vector2( -3905.9, 349.813 )
-rotation = 3.66712
+rotation = -2.61607
 scale = Vector2( 2, 2 )
+
+[node name="WallFlat5" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( -14224.7, 0 )
+scale = Vector2( 4, 32 )
+
+[node name="WallFlat6" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 0, 14348 )
+rotation = 1.5708
+scale = Vector2( 4, 32 )
+
+[node name="WallFlat7" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 15872, 0 )
+scale = Vector2( 4, 32 )
+
+[node name="WallFlat9" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 11956.1, 7348.56 )
+scale = Vector2( 2, 13 )
+
+[node name="WallFlat10" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 11956.1, -7062.8 )
+scale = Vector2( 2, 13 )
+
+[node name="WallFlat11" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 13883.2, -800 )
+rotation = 1.5708
+scale = Vector2( 1, 5 )
+
+[node name="WallFlat12" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 13883.2, 800 )
+rotation = 1.5708
+scale = Vector2( 1, 5 )
+
+[node name="WallFlat8" parent="Level/Map" instance=ExtResource( 11 )]
+position = Vector2( 0, -14080 )
+rotation = 1.5708
+scale = Vector2( 4, 32 )
+
+[node name="AsteroidSpin" parent="Level/Map" instance=ExtResource( 19 )]
+position = Vector2( 1990.28, 402.492 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Generator" parent="Level/Map/AsteroidSpin" instance=ExtResource( 12 )]
+position = Vector2( -82.5449, -324.888 )
+
+[node name="Electricity" parent="Level" instance=ExtResource( 18 )]
+position = Vector2( 11452.5, -1.5415 )
+scale = Vector2( 2, 2.005 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
